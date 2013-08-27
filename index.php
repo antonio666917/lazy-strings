@@ -1,17 +1,14 @@
 <?php
-//header('Content-type: application/json');
 
-// CSV to Text Script
+// This file gets a CSV from a remote location
+// and burns it to JSON file(s)
 
-    // Basic onfiguration & settings
     $csv_url = 'https://docs.google.com/spreadsheet/pub?key=0AprWwp-DcA85dHRtbk1oblh6c1R4dzBQOHYtVnJ2R0E&output=csv';
     $sheets = array('EN' => 0, 'ES' => 1);
     $target_folder = 'strings/';
 
-
-
     if(count($sheets) > 0)
-    { // we got several sheets
+    {
         foreach($sheets AS $key => $val)
         {
             burnCopy(getCopy($csv_url.'&single=true&gid='.$val), $target_folder, $key.'.json');
@@ -22,11 +19,8 @@
         burnCopy(getCopy($csv_url), $target_folder, 'copy.json');
     }
 
-
     echo "done!";
 
-    /* This function gets the copy from the CSV
-    and returns a JSON object */
     function getCopy($csv_file)
     {
         $s = (object) array(
@@ -62,7 +56,6 @@
             return false;
         }
     }
-
 
     function burnCopy($data, $folder, $file)
     {
